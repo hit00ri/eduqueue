@@ -18,7 +18,7 @@ require_once "api/index-b.php"
 <div class="login-container card fade-in">
   <div class="login-logo">
     <i class="bi bi-ticket-perforated" style="font-size:28px;color:var(--accent)"></i>
-    <h1>final test</h1>
+    <h1>github connection test</h1>
   </div>
   <?php if ($err): ?>
     <div class="alert alert-danger"><?=htmlspecialchars($err)?></div>
