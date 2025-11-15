@@ -1,6 +1,7 @@
 <?php
 require_once "../db/config.php";
-unset($_SESSION['student']);
+
+session_destroy();
 header("Location: ../student_login.php");
 exit;
 ?>
