@@ -1,0 +1,20 @@
+.sidebar-link {
+    padding: 10px 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s ease, padding-left 0.2s ease;
+}
+
+.sidebar-link:hover {
+    background: var(--accent);
+    color: white !important;
+    padding-left: 20px;
+}
+
+.sidebar-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

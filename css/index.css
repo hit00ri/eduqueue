@@ -1,0 +1,10 @@
+/* index.css - login page */
+.login-container {
+  max-width: 480px;
+  margin: 70px auto;
+  padding: 32px;
+}
+.login-logo {
+  display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:18px;
+}
+.login-logo h1 { margin:0; font-size:1.4rem; }

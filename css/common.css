@@ -1,0 +1,93 @@
+/* common.css - theme variables, dark mode, animations, sidebar layout, bootstrap theme integration */
+
+:root{
+  --bg: #f4f7fa;
+  --card-bg: #ffffff;
+  --text: #2c2c2c;
+  --accent: #0d6efd;
+  --muted: #6c757d;
+  --border: #e6e9ee;
+}
+
+.dark-mode {
+  --bg: #0f1720;
+  --card-bg: #11151a;
+  --text: #e6eef6;
+  --accent: #66aaff;
+  --muted: #9aa6b2;
+  --border: #20262b;
+}
+
+body {
+  background: linear-gradient(180deg, var(--bg), #eef3fb);
+  color: var(--text);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  transition: background 0.35s ease, color 0.35s ease;
+  min-height: 100vh;
+}
+
+/* cards + containers */
+.card, .sidebar, .student-box, .login-container {
+  background: var(--card-bg) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(14,30,37,0.04);
+}
+
+/* buttons */
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.btn-outline-secondary {
+  color: var(--text);
+  border-color: var(--border);
+}
+
+/* fade in animation */
+.fade-in { animation: fadeIn 0.45s ease both; }
+@keyframes fadeIn { from{ opacity:0; transform: translateY(8px);} to{opacity:1; transform:none;} }
+
+/* sidebar */
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: 26px;
+  border-right: 1px solid var(--border);
+}
+.sidebar h4 { font-size: 1.05rem; margin-bottom: 14px; }
+.sidebar a {
+  display:flex; align-items:center;
+  padding: 10px 12px;
+  margin-bottom:8px;
+  color: var(--text);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: 0.18s;
+}
+.sidebar a:hover { background: rgba(13,110,253,0.12); color: var(--text); transform: translateX(4px); }
+.nav-icon { margin-right:10px; font-size:1.05rem; }
+
+/* main content */
+.main-content { margin-left: 260px; padding: 28px; }
+
+/* dark toggle */
+.dark-toggle {
+  position: fixed; right: 22px; bottom: 22px;
+  background: var(--accent); color:white; border: none;
+  width:50px; height:50px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow: 0 10px 30px rgba(11,22,40,0.12); cursor:pointer;
+  transition: transform .18s ease;
+}
+.dark-toggle:hover { transform: scale(1.06); }
+
+/* responsive */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main-content { margin-left: 0; padding: 18px; }
+}
