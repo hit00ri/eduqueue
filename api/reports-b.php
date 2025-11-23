@@ -1,9 +1,21 @@
 <?php
 require_once "db/config.php";
 
+// Check if MetricsService exists before including
+$metricsServicePath = "services/MetricsService.php";
+if (file_exists($metricsServicePath)) {
+    require_once $metricsServicePath;
+}
+
 if (!isset($_SESSION['user'])) {
     header("Location: index.php");
     exit;
+}
+
+// Initialize metrics service if available
+$metricsService = null;
+if (class_exists('MetricsService')) {
+    $metricsService = new MetricsService($conn);
 }
 
 // Get queue data
@@ -21,14 +33,35 @@ $transactions = $conn->query("
     LIMIT 10
 ")->fetchAll(PDO::FETCH_ASSOC);
 
-// Counts
+// Counts - FIXED VERSION (using your existing queue table)
 $servedCount = $conn->query("
     SELECT COUNT(*) as count FROM queue 
     WHERE status = 'served' AND DATE(time_in) = CURDATE()
-")->fetch(PDO::FETCH_ASSOC)['count'];
+")->fetch(PDO::FETCH_ASSOC)['count'] ?? 0;
 
 $waitingCount = $conn->query("
     SELECT COUNT(*) as count FROM queue 
     WHERE status = 'waiting' AND DATE(time_in) = CURDATE()
-")->fetch(PDO::FETCH_ASSOC)['count'];
+")->fetch(PDO::FETCH_ASSOC)['count'] ?? 0;
+
+// Try to get today's summary if metrics tables exist
+$todaySummary = null;
+try {
+    $todaySummary = $conn->query("
+        SELECT * FROM daily_kpi_summary 
+        WHERE summary_date = CURDATE()
+    ")->fetch(PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+    // Table doesn't exist yet, that's okay
+    $todaySummary = null;
+}
+
+// If metrics service is available, generate summary
+if ($metricsService && !$todaySummary) {
+    try {
+        $metricsService->generateDailyKPISummary(date('Y-m-d'));
+    } catch (Exception $e) {
+        // Ignore errors for now
+    }
+}
 ?>
